@@ -5,22 +5,16 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="./styles.css">
    
-    <link href="https://cdn.glitch.com/91a937ed-7c95-4937-b5ea-0acf833d6a2e%2Fvis-network.min.css?1511630986397" rel="stylesheet" type="text/css" />
-    <link href="https://cdn.glitch.com/ad61e0ff-8bec-4e64-ab9c-b530cb45b849%2Fvis-timeline-graph2d.min.css?1514476632904" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" src="https://cdn.glitch.com/91a937ed-7c95-4937-b5ea-0acf833d6a2e%2Fvis.js?1511630930026"></script>
+    <link href="./node_modules/vis/dist/vis-network.min.css" rel="stylesheet" type="text/css" />
+    <link href="./node_modules/vis/dist/vis-timeline-graph2d.min.css" rel="stylesheet" type="text/css" />
 
-    <script src="/storage.js"></script>
-    <script src="/Graph.js"></script>
-    <script src="/RHH.js"></script>
-    <script src="/draw.js" defer></script>
-    <script src="/solve.js" defer></script>
-    <script src="/script.js" defer></script>
+    <script src="./index.js" defer></script>
     <link href="https://fonts.googleapis.com/css?family=Karla|Roboto+Slab" rel="stylesheet">
   </head>
   <body>
-    <a href="/"><h1>Graph Generator</h1></a>
+    <a href="#"><h1>Graph Generator</h1></a>
       Enter a valid degree sequence and click "generate".
     <form id="degree-seq">
       <input id="input" type="text" class="pillbox"/>
