@@ -1,9 +1,11 @@
+import vis from 'vis';
+
 let mergeCount = 0;
 let stackCount = 0;
 let queueCount = 0;
 let transferCount = 0;
 
-function drawHistogram(histogram) {
+export default function draw(histogram) {
   const container = document.getElementById('histogram');
   //const items = Object.entries(histogram).map(([x, y]) => {
     //return {x, y};

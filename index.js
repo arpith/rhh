@@ -1,3 +1,5 @@
+import { rhh } from './solve';
+
 const input = document.getElementById('input');
 //const type = document.getElementById('type');
 const type = 'stack';

@@ -1,3 +1,6 @@
+import RHH from './RHH';
+import draw from './draw';
+
 function isNonIncreasing(seq) {
   // O(n)
   return seq.every(({degree}, i) => {
@@ -17,7 +20,7 @@ function incrementCount(histogram, cycles) {
   histogram[cycles]++;
 }
 
-function rhh(params) {
+export function rhh(params) {
   const paramsSeq = params.seq || '';
   const degreeSeq = paramsSeq.split(',').map(s => s.trim()).map(s => parseInt(s));
   const messageDiv = document.getElementById('message');
@@ -45,6 +48,6 @@ function rhh(params) {
       i++;
     }
     console.log(histogram);
-    drawHistogram(histogram);
+    draw(histogram);
   }
 }

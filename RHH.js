@@ -1,3 +1,6 @@
+import Storage from './Storage';
+import Graph from './Graph';
+
 class RHH {
   constructor(seq, type) {
     this.storage = new Storage();
@@ -44,3 +47,5 @@ class RHH {
     return true;
   }
 }
+
+export default RHH;
