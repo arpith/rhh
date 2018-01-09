@@ -20,9 +20,9 @@ function incrementCount(histogram, cycles) {
   histogram[cycles]++;
 }
 
-export function rhh(params) {
-  const paramsSeq = params.seq || '';
-  const degreeSeq = paramsSeq.split(',').map(s => s.trim()).map(s => parseInt(s));
+export function rhh(n) {
+  const degreeSeq = Array(n).fill(2);
+  console.log(n, degreeSeq);
   const messageDiv = document.getElementById('message');
   const labels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 
     'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 

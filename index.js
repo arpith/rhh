@@ -5,30 +5,26 @@ const input = document.getElementById('input');
 const type = 'stack';
 const steps = document.getElementById('steps');
 
-function fillForm({seq}) {
-  input.value = seq || '';
+function fillForm(n) {
+  input.value = n || '';
 }
 
-function getParams() {
-  const search = window.location.search.substring(1);
-  const params = {};
-  search.split('&').forEach((p) => {
-    const [key, value] = p.split('=');
-    params[key] = value;
-  });
-  return params;
+function getN() {
+  const searchString = window.location.search.substring(1);
+  const [ key, value ] = searchString.split('=');
+  return parseInt(value);
 }
 
 function generate(evt) {
   evt.preventDefault();
-  const seq = input.value.split(',').map(s => s.trim()).join(',');
-  window.location.search = `seq=${seq}`;
+  const n = input.value;
+  window.location.search = `n=${n}`;
   return false;
 };
 
 document.forms['degree-seq'].onsubmit = generate;
-let params = getParams();
-fillForm(params);
-if (params.seq) {
-  rhh(params);
+const n = getN();
+fillForm(n);
+if (n) {
+  rhh(n);
 }
