@@ -10,6 +10,13 @@ export default function draw(histogram) {
       legend: {
         display: false,
       },
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true,
+          },
+        }],
+      },
     },
     data: {
       labels,
