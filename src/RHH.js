@@ -21,18 +21,11 @@ class RHH {
     });
   }
   
-  draw(label) {
-    console.log("going to draw graph");
-    console.log(this.graph.getCycles());
-    drawGraph(this.graph, label, `shift-${this.type}-graph`);
-  }
-  
   isGraphic() {
     let v1 = null;
     while (this.storage.length != 0) {
       v1 = this.storage.popRandom(this.type);
       if (!v1 || v1.degree == 0) {
-        //this.draw(v1.label);
         this.graph.getCycles();
         return true;
       } else if (v1.degree >= this.storage.length) {
@@ -42,7 +35,6 @@ class RHH {
       }
       this.transform(v1);
     }
-    //this.draw();
     this.graph.getCycles();
     return true;
   }
