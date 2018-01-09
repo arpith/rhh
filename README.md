@@ -1,19 +1,5 @@
-# Graph Generator
+# Random Havel Hakimi
 
-This is a tool to generate graphs from degree sequences. A degree sequence is a non-increasing list of the number of edges for each vertex.
+This is a tool that generates graphs where each vertex has degree 2 using the Random Havel Hakimi algorithm. The input is the number of vertices and the algorithm is run 10000 times. The output is a chart with the number of times each graph was generated.
 
-
-ヽ(๏∀๏ )ﾉ
-
-## ← index.html
-
-Where you'll write the content of your website. 
-
-## ← styles.css
-
-CSS files add styling rules to your content
-
-## ← script.js
-
-If you're feeling fancy you can add interactivity to your site with Javascript
-
+Since the degrees of the vertices are 2, the class of graphs that are generated are cycles corresponding to the integer partitioning (with numbers greater than 2) of the number of vertices. For example, with 6 vertices we can either have a single cycle with 6 vertices, or a graph with two cycles with 3 vertices each.
