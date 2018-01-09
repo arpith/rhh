@@ -7,6 +7,11 @@ export default function draw(histogram) {
   const data = labels.map(key => histogram[key]);
   const chart = new Chart(canvas, {
     type: 'bar',
+    options: {
+      legend: {
+        display: false,
+      },
+    },
     data: {
       labels,
       datasets: [{
