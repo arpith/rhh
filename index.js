@@ -1,9 +1,6 @@
 import { rhh } from './solve';
 
 const input = document.getElementById('input');
-//const type = document.getElementById('type');
-const type = 'stack';
-const steps = document.getElementById('steps');
 
 function fillForm(n) {
   input.value = n || '';
