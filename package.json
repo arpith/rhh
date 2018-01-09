@@ -9,6 +9,7 @@
     "start": "parcel index.html"
   },
   "dependencies": {
+    "babel-preset-env": "^1.6.1",
     "chart.js": "^2.7.1"
   },
   "devDependencies": {
