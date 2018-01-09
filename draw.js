@@ -1,4 +1,3 @@
-import vis from 'vis';
 import Chart from 'chart.js';
 
 export default function draw(histogram) {
