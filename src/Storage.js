@@ -61,12 +61,4 @@ export default class Storage {
     items.forEach(v => this.append(v.degree, v));
     return items;
   }
-  
-  non_zero_count() {
-    if (!this.store[0]) {
-      return this.length;
-    } else {
-      return this.length - this.store[0].length;
-    }
-  }
 }
