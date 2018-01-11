@@ -41,13 +41,13 @@ export function rhh(n) {
       const seq = degreeSeq.map((degree, i) => {
         return { id: i, label: `${labels[i]}: ${degree}`, degree };
       });
-      const rhh = new RHH(seq, 'stack');
+      const rhh = new RHH(seq);
+      rhh.graph.getCycles();
       const cycles = rhh.graph.cycles;
       const cycleLengths = cycles.map(cycle => cycle.length).sort().toString();
       incrementCount(histogram, cycleLengths);
       i++;
     }
-    console.log(histogram);
     draw(histogram);
   }
 }
