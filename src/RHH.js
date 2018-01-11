@@ -24,7 +24,7 @@ class RHH {
   isGraphic() {
     let v1 = null;
     while (this.storage.length != 0) {
-      v1 = this.storage.popRandom(this.type);
+      v1 = this.storage.popRandom();
       if (!v1 || v1.degree == 0) {
         this.graph.getCycles();
         return true;
