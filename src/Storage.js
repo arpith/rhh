@@ -20,7 +20,13 @@ export default class Storage {
     // See https://stackoverflow.com/questions/1527803/generating-random-whole-numbers-in-javascript-in-a-specific-range
     return Math.floor(Math.random() * (max + 1));
   }
-  
+
+  updateHead() {
+    while (!this.store[this.head] || this.store[this.head].length == 0) {
+      this.head -= 1;
+    }
+  }
+
   pop(i) {
     let j = this.head;
     let count = this.store[j].length;
@@ -31,15 +37,14 @@ export default class Storage {
     }
     // count - i gives the distance from the end of the last list
     // length - distance from end is distance from start
-    const k = this.store[j].length - (count - i); 
+    const k = this.store[j].length - (count - i);
+    const vertex = this.store[j].splice(k, 1)[0];
     this.length -= 1;
-    return this.store[j].splice(k, 1)[0];
+    this.updateHead();
+    return vertex;
   }
   
   popRandom(isMax) {
-    while (!this.store[this.head] || this.store[this.head].length == 0) {
-      this.head -= 1;
-    }
     if (isMax) {
       const i = this.randomInt(this.store[this.head].length - 1);
       return this.pop(i);
