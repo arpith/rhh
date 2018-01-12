@@ -41,10 +41,8 @@ export default class Storage {
       this.head -= 1;
     }
     if (isMax) {
-      const max = this.store[this.head].length - 1;
-      const i = this.randomInt(max);
-      this.length -= 1;
-      return this.store[this.head].splice(i, 1)[0];
+      const i = this.randomInt(this.store[this.head].length - 1);
+      return this.pop(i);
     } else {
       const i = this.randomInt(this.length - 1);
       return this.pop(i);
