@@ -1,5 +1,6 @@
 import Chart from 'chart.js';
 
+Chart.defaults.global.defaultFontColor = 'rgba(148, 132, 194, 0.9)';
 export default function draw(histogram) {
   const canvas = document.getElementById("histogram");
   const labels = Object.keys(histogram).sort();
@@ -18,6 +19,22 @@ export default function draw(histogram) {
           },
         }],
       },
+      animation: {
+        onComplete: function () {
+          var chartInstance = this.chart;
+          var ctx = chartInstance.ctx;
+          var height = chartInstance.controller.boxes[0].bottom;
+          ctx.textAlign = "center";
+
+          Chart.helpers.each(this.data.datasets.forEach(function (dataset, i) {
+            var meta = chartInstance.controller.getDatasetMeta(i);
+            Chart.helpers.each(meta.data.forEach(function (bar, index) {
+              var centerPoint = bar.getCenterPoint();
+              ctx.fillText(dataset.data[index], centerPoint.x, centerPoint.y);
+            }),this);
+          }),this);
+        }
+      }
     },
     data: {
       labels,
