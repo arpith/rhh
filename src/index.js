@@ -1,27 +1,37 @@
 import { rhh } from './solve';
 
-const input = document.getElementById('input');
+const inputN = document.getElementById('n');
+const inputQ = document.getElementById('q');
 
-function fillForm(n) {
-  input.value = n || '';
+function fillForm(n, q) {
+  inputN.value = n || '';
+  inputQ.value = q || 1;
 }
 
-function getN() {
+function getParams() {
   const searchString = window.location.search.substring(1);
-  const [ key, value ] = searchString.split('=');
-  return parseInt(value);
+  const params = {};
+  searchString.split('&').forEach((paramString) => {
+    const [ key, value ] = paramString.split('=');
+    params[key] = parseInt(value);
+  });
+  return params;
 }
 
 function generate(evt) {
   evt.preventDefault();
-  const n = input.value;
-  window.location.search = `n=${n}`;
+  const n = inputN.value;
+  const q = inputQ.value;
+  window.location.search = `n=${n}&q=${q}`;
   return false;
 };
 
 document.forms['degree-seq'].onsubmit = generate;
-const n = getN();
-fillForm(n);
+let { n, q } = getParams();
+if (!q) {
+  q = 1;
+}
+fillForm(n, q);
 if (n) {
-  rhh(n);
+  rhh(n, q);
 }
