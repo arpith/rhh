@@ -22,6 +22,10 @@ export default class Storage {
     return Math.floor(Math.random() * (max + 1));
   }
 
+  randomNumber(max) {
+    return Math.random() * (max + 1);
+  }
+
   updateHead() {
     while ((!this.store[this.head] || this.store[this.head].length == 0) && (this.head > 0)) {
       this.head -= 1;
@@ -102,24 +106,29 @@ export default class Storage {
     // Define S(q) to be the selection process in which
     // a vertex with degree d is selected with probability d^q/D(q)
     // where D(q) = sum((d_i)^q)
-    // Note: given a list of items a, a, a, b, b, c, c, c
-    // probability of choosing a = count(a) / (count(a) + count(b) + count(c))
-    // let count(d) = d^q, then probability of choosing di = di^q / (d1^q + .. + dn^q)
-    let items = [];
-    const degrees = Object.keys(this.store);
-    degrees.forEach((d) => {
-      if ((d !== '0') && (this.store[d].length > 0)) {
-        items = items.concat(Array(this.q).fill(d));
+    // The technique used is explained here:
+    // http://codetheory.in/weighted-biased-random-number-generation-with-javascript-based-on-probability/
+    // Let the weights be w0, w1, etc.
+    // Select a random number r between 0 and sum(weights)
+    // Let i be the smallest index such that r <= sum(w0 + ... + w_i).
+    // Then we choose the item corresponding to w_i.
+    // In our case this corresponds to a vertex with degree d_i.
+    // Note that from among the k vertices with degree d_i, a vertex is chosen at random.
+    // Hence the probability that a vertex with degree d is chosen is
+    // w_i * (1 / k) = (k * d^q / D(q)) * (1 / k) = d^q / D(q)
+    // where D(q) is sum((d_j)^q).
+    const degrees = Object.keys(this.store).filter(d => this.store[d].length > 0);
+    const sum = (a, b) => a + b;
+    const D = degrees.map(d => Math.pow(parseInt(d), this.q)).reduce(sum)
+    const weight = (d) => this.store[d].length * Math.pow(parseInt(d), this.q) / D;
+    const randomNumber = this.randomNumber(degrees.map(weight).reduce(sum));
+    let sumWeights = 0;
+    for (const degree of degrees) {
+      sumWeights += weight(degree);
+      if (randomNumber <= sumWeights) {
+        const [v] = this.popMultipleRandomFromStack(1, degree);
+        return v;
       }
-    });
-    console.log(items);
-    if ((items.length === 0) && (this.store['0'])) {
-      const [v] = this.popMultipleRandomFromStack(1, '0');
-      return v;
     }
-    const i = this.randomInt(items.length - 1);
-    const d = items[i];
-    const [v] = this.popMultipleRandomFromStack(1, d);
-    return v;
   }
 }
