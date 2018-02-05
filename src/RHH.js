@@ -2,8 +2,8 @@ import Storage from './Storage';
 import Graph from './Graph';
 
 class RHH {
-  constructor(seq) {
-    this.storage = new Storage();
+  constructor(seq, q) {
+    this.storage = new Storage(q);
     this.graph = new Graph();
     seq.forEach((v) => {
       this.storage.append(v.degree, v);
@@ -22,7 +22,7 @@ class RHH {
   
   isGraphic() {
     while (this.storage.length != 0) {
-      const v1 = this.storage.popRandom();
+      const v1 = this.storage.S();
       this.transform(v1);
     }
     return true;

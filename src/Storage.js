@@ -1,8 +1,9 @@
 export default class Storage {
-  constructor() {
+  constructor(q) {
     this.store = {};
     this.head = 0;
     this.length = 0;
+    this.q = q;
   }
 
   append(key, value) {
@@ -95,5 +96,30 @@ export default class Storage {
       this.append(v.degree, v);
     });
     return items;
+  }
+
+  S() {
+    // Define S(q) to be the selection process in which
+    // a vertex with degree d is selected with probability d^q/D(q)
+    // where D(q) = sum((d_i)^q)
+    // Note: given a list of items a, a, a, b, b, c, c, c
+    // probability of choosing a = count(a) / (count(a) + count(b) + count(c))
+    // let count(d) = d^q, then probability of choosing di = di^q / (d1^q + .. + dn^q)
+    let items = [];
+    const degrees = Object.keys(this.store);
+    degrees.forEach((d) => {
+      if ((d !== '0') && (this.store[d].length > 0)) {
+        items = items.concat(Array(this.q).fill(d));
+      }
+    });
+    console.log(items);
+    if ((items.length === 0) && (this.store['0'])) {
+      const [v] = this.popMultipleRandomFromStack(1, '0');
+      return v;
+    }
+    const i = this.randomInt(items.length - 1);
+    const d = items[i];
+    const [v] = this.popMultipleRandomFromStack(1, d);
+    return v;
   }
 }
