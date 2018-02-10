@@ -23,7 +23,7 @@ export default class Storage {
   }
 
   randomNumber(max) {
-    return Math.random() * (max + 1);
+    return Math.random() * max;
   }
 
   updateHead() {
