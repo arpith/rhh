@@ -97,7 +97,9 @@ export default class Storage {
     items = items.concat(randomPopItems);
     items.forEach((v) => {
       v.degree--;
-      this.append(v.degree, v);
+      if (v.degree > 0) {
+        this.append(v.degree, v);
+      }
     });
     return items;
   }
