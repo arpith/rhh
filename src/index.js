@@ -5,7 +5,7 @@ const inputQ = document.getElementById('q');
 
 function fillForm(n, q) {
   inputN.value = n || '';
-  inputQ.value = q || 1;
+  inputQ.value = q;
 }
 
 function getParams() {
@@ -28,7 +28,7 @@ function generate(evt) {
 
 document.forms['degree-seq'].onsubmit = generate;
 let { n, q } = getParams();
-if (!q) {
+if (!q && q !== 0) {
   q = 1;
 }
 fillForm(n, q);
