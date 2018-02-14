@@ -54,11 +54,6 @@ export default class Storage {
     return vertex;
   }
   
-  popRandom() {
-    const i = this.randomInt(this.length - 1);
-    return this.pop(i);
-  }
-
   popUntilDegree(degree) {
     let i = this.head;
     let ret = [];
@@ -104,32 +99,50 @@ export default class Storage {
     return items;
   }
 
+  sum(a, b) {
+    return a + b;
+  }
+
+  degreeSeq() {
+    // Return the degree sequence stored :)
+    const createSeq = ([d, v]) => v.slice().fill(parseInt(d));
+    const sequences = Object.entries(this.store).map(createSeq);
+    return [].concat(...sequences);
+  }
+
+  D() {
+    // In general, let q be a real number.
+    // Let D(q)=sum((d_i)^q) be the sum of all the degrees to the power of q.
+    // If the sequence is (2,1,1) for vertices (A,B,C) and q=1
+    // then D = 2 + 1 + 1
+    const raise = (d) => Math.pow(d, this.q);
+    return this.degreeSeq().map(raise).reduce(this.sum);
+  }
+
+  weight(degree) {
+    // A vertex with degree d is selected with probability d^q/D(q)
+    // If the sequence is (2,1,1) for vertices (A,B,C) and q = 1
+    // Then A is selected with probability 1/2 while B and C each is selected with probability 1/4
+    return Math.pow(degree, this.q) / this.D();
+  }
+
   S() {
     // Define S(q) to be the selection process in which
     // a vertex with degree d is selected with probability d^q/D(q)
-    // where D(q) = sum((d_i)^q)
     // The technique used is explained here:
     // http://codetheory.in/weighted-biased-random-number-generation-with-javascript-based-on-probability/
     // Let the weights be w0, w1, etc.
     // Select a random number r between 0 and sum(weights)
     // Let i be the smallest index such that r <= sum(w0 + ... + w_i).
     // Then we choose the item corresponding to w_i.
-    // In our case this corresponds to a vertex with degree d_i.
-    // Note that from among the k vertices with degree d_i, a vertex is chosen at random.
-    // Hence the probability that a vertex with degree d is chosen is
-    // w_i * (1 / k) = (k * d^q / D(q)) * (1 / k) = d^q / D(q)
-    // where D(q) is sum((d_j)^q).
-    const degrees = Object.keys(this.store).filter(d => this.store[d].length > 0);
-    const sum = (a, b) => a + b;
-    const D = degrees.map(d => Math.pow(parseInt(d), this.q)).reduce(sum)
-    const weight = (d) => this.store[d].length * Math.pow(parseInt(d), this.q) / D;
-    const randomNumber = this.randomNumber(degrees.map(weight).reduce(sum));
+    const degrees = this.degreeSeq();
+    const totalWeight = degrees.map(this.weight, this).reduce(this.sum);
+    const randomNumber = this.randomNumber(totalWeight);
     let sumWeights = 0;
-    for (const degree of degrees) {
-      sumWeights += weight(degree);
+    for (const [i, degree] of degrees.entries()) {
+      sumWeights += this.weight(degree);
       if (randomNumber <= sumWeights) {
-        const [v] = this.popMultipleRandomFromStack(1, degree);
-        return v;
+        return this.pop(i);
       }
     }
   }
